@@ -1,10 +1,94 @@
-<section>
-  <div id="map"
-       leaflet
-       [leafletOptions]="options"
-       [leafletLayers]="Layer"
 
-  >
+
+
+
+<div id="drawer-navigation" class="z-50 fixed top-0 right-0 z-40 w-4/12 h-screen p-4 overflow-y-auto transition-transform -translate-x-full bg-white dark:bg-gray-800" tabindex="-1" aria-labelledby="drawer-navigation-label">
+  <h5 id="drawer-navigation-label" class="text-base font-semibold text-gray-500 uppercase dark:text-gray-400">Фильтры</h5>
+  <button type="button" data-drawer-hide="drawer-navigation" aria-controls="drawer-navigation" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 absolute top-2.5 right-2.5 inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white" >
+    <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+    <span class="sr-only">Закрыть</span>
+  </button>
+  <div class="py-4 overflow-y-auto">
+    <ul class="space-y-2 font-medium">
+      <div id="accordion-collapse" data-accordion="collapse">
+        <div class="my-4" *ngIf="areas != null">
+          <h2 id="area-heading-1" >
+            <button type="button" class="flex items-center justify-between w-full p-5 font-medium text-left text-gray-500 border border-b-0 border-gray-200 rounded-t-xl focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-800 dark:border-gray-700 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800" data-accordion-target="#area-body-1" aria-expanded="true" aria-controls="area-body-1">
+              <span>Районы</span>
+              <svg data-accordion-icon class="w-6 h-6 rotate-180 shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+            </button>
+          </h2>
+          <div id="area-body-1" class="hidden" aria-labelledby="area-heading-1">
+            <fieldset class="px-4 my-2" *ngIf="areas.length">
+              <legend class="sr-only">Районы:</legend>
+
+              <div class="flex items-center mb-4" *ngFor="let area of areas">
+                <input (change)="toggleArea(area.id)" id="area-{{area.id}}" type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" >
+                <label for="area-{{area.id}}" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">{{area.title_ru}}</label>
+              </div>
+
+            </fieldset>
+          </div>
+        </div>
+        <div class="my-4" *ngIf="places != null">
+          <h2 id="place-heading-1" >
+            <button type="button" class="flex items-center justify-between w-full p-5 font-medium text-left text-gray-500 border border-b-0 border-gray-200 rounded-t-xl focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-800 dark:border-gray-700 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800" data-accordion-target="#place-body-1" aria-expanded="true" aria-controls="place-body-1">
+              <span>Места ({{places.length}})</span>
+              <svg data-accordion-icon class="w-6 h-6 rotate-180 shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+            </button>
+          </h2>
+          <div id="place-body-1" class="hidden" aria-labelledby="place-heading-1">
+            <fieldset class="px-4 my-2" *ngIf="places.length">
+              <legend class="sr-only">Места:</legend>
+
+              <div class="flex items-center mb-4" *ngFor="let place of places">
+                <input (change)="togglePlaces(place.id)" id="place-{{place.id}}" type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" >
+                <label for="place-{{place.id}}" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">{{place.title_ru}}</label>
+              </div>
+
+            </fieldset>
+          </div>
+        </div>
+        <div class="my-4" *ngIf="makers != null">
+          <h2 id="makers-heading-1" >
+            <button type="button" class="flex items-center justify-between w-full p-5 font-medium text-left text-gray-500 border border-b-0 border-gray-200 rounded-t-xl focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-800 dark:border-gray-700 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800" data-accordion-target="#makers-body-1" aria-expanded="true" aria-controls="makers-body-1">
+              <span>Точки посадки ({{makers.length}})</span>
+              <svg data-accordion-icon class="w-6 h-6 rotate-180 shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+            </button>
+          </h2>
+          <div id="makers-body-1" class="hidden" aria-labelledby="place-heading-1">
+            <fieldset class="px-4 my-2" *ngIf="makers.length">
+              <legend class="sr-only">Точки посадки:</legend>
+
+              <div class="flex items-center mb-4" *ngFor="let maker of makers">
+                <input (change)="toggleMarkers(maker.id)" id="place-{{maker.id}}" type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" >
+                <label for="place-{{maker.id}}" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">{{maker.geocode}}</label>
+              </div>
+
+            </fieldset>
+          </div>
+        </div>
+
+      </div>
+    </ul>
   </div>
-</section>
+</div>
 
+
+    <!-- drawer init and show -->
+    <div class="text-center">
+      <button class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800" type="button" data-drawer-target="drawer-navigation" data-drawer-show="drawer-navigation" aria-controls="drawer-navigation">
+        Show navigation
+      </button>
+
+      <div
+        id="map"
+        class="z-10"
+        leaflet
+        [leafletOptions]="options"
+        [leafletLayers]="Layer"
+      >
+      </div>
+    </div>
+
+    <!-- drawer component -->

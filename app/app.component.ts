@@ -22,6 +22,10 @@ export class AppComponent implements OnInit {
   Layer = [];
   //@ts-ignore
   SystemData:SystemData;
+  //Interactive array
+  activeAreas:number[] = [];
+  activePlaces:number[] = [];
+  activeMarkers:number[] = [];
 
   treeIcon = icon({
     iconUrl:"https://png.pngtree.com/png-vector/20221205/ourmid/pngtree-simple-tree-png-image_6506935.png",
@@ -45,18 +49,12 @@ export class AppComponent implements OnInit {
   constructor(private areaService:AreaService,private placeService:PlaceService,private markerService:MarkerService,private systemService:SystemDataService) {
       this.initializeSystemData();
       this.initializeArea();
-      this.initializePlace();
-      this.initializeMarker();
-
   }
 
   initializeSystemData(){
-
     this.systemService.getAll().subscribe(
       data=>{
         this.SystemData = data;
-
-        console.log(data);
       }
     );
   }
@@ -65,43 +63,36 @@ export class AppComponent implements OnInit {
     this.areaService.getAll().subscribe(
       data=>{
         this.areas = data;
-        this.areas.forEach(
-          itemArea=>{
-            this.AddLayer(itemArea.geocode,itemArea.bg_color,itemArea.title_ru);
-          }
-        )
       }
     );
   }
 
   initializePlace(){
-    this.placeService.getAll().subscribe(
-      data=>{
-        this.places = data;
-        this.places.forEach(
-          itemPlace=>{
-            this.AddLayer(itemPlace.geocode,itemPlace.bg_color,itemPlace.title_ru);
-          }
-        )
-      }
-    );
+    if(this.activeAreas.length){
+      this.placeService.getAll(this.activeAreas).subscribe(
+        data=>{
+          this.places = data;
+        }
+      );
+    }
+    else{
+      this.places = [];
+    }
+
   }
 
   initializeMarker(){
-    this.markerService.getAll().subscribe(
-      data=>{
-        this.makers = data;
-        this.makers.forEach(
-          itemMarker=>{
-            let geocode = (JSON.parse(itemMarker.geocode));
-            // @ts-ignore
-            this.Layer.push(marker([geocode.lat, geocode.lng ],{icon: this.treeIcon}).on("click",function () {
-              console.log(itemMarker);
-            }));
-          }
-        )
-      }
-    );
+    if(this.activePlaces.length){
+      this.markerService.getAll(this.activePlaces).subscribe(
+        data=>{
+          this.makers = data;
+        }
+      );
+    }
+    else{
+      this.makers = [];
+    }
+
   }
 
 
@@ -113,6 +104,55 @@ export class AppComponent implements OnInit {
     data.bindTooltip(title_ru, { permanent: true, offset: [0, 12] });
     // @ts-ignore
     this.Layer.push(data);
+  }
+
+  toggleArea(id:number){
+    let index = this.activeAreas.indexOf(id)
+    index == -1 ? this.activeAreas.push(id) : this.activeAreas.splice(index,1);
+    this.initializePlace();
+    this.recreateLayer();
+  }
+
+  togglePlaces(id:number){
+    let index = this.activePlaces.indexOf(id)
+    index == -1 ? this.activePlaces.push(id) : this.activePlaces.splice(index,1);
+    this.initializeMarker();
+    this.recreateLayer();
+  }
+
+  toggleMarkers(id:number){
+    let index = this.activeMarkers.indexOf(id)
+    index == -1 ? this.activeMarkers.push(id) : this.activeMarkers.splice(index,1);
+    this.recreateLayer();
+  }
+  recreateLayer(){
+    this.Layer = [];
+    this.areas.forEach(
+      itemArea=>{
+        if(this.activeAreas.indexOf(itemArea.id) != -1){
+          this.AddLayer(itemArea.geocode,itemArea.bg_color,itemArea.title_ru);
+        }
+      }
+    )
+    this.places.forEach(
+      item=>{
+        if(this.activePlaces.indexOf(item.id) != -1){
+          this.AddLayer(item.geocode,item.bg_color,item.title_ru);
+        }
+      }
+    )
+    this.makers.forEach(
+      itemMarker=>{
+        if(this.activeMarkers.indexOf(itemMarker.id)){
+          let geocode = (JSON.parse(itemMarker.geocode));
+          // @ts-ignore
+          this.Layer.push(marker([geocode.lat, geocode.lng ],{icon: this.treeIcon}).on("click",function () {
+            console.log(itemMarker);
+          }));
+        }
+
+      }
+    )
   }
 
 
