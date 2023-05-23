@@ -15,7 +15,7 @@ export class SystemDataService {
   }
   SystemData = new Observable<SystemData>();
   getAll():Observable<SystemData>{
-    if(this.SystemData){
+    if(Object.keys(this.SystemData).length){
       return this.SystemData;
     }
     return this.SystemData = this.http.get<SystemData>(this.baseApi + "/get-system-all").pipe(

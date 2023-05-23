@@ -16,12 +16,21 @@ export class MarkerService {
 
   }
 
-  getAll(ids:number[]):Observable<Marker[]>{
+  getAll(ids:number[],filters:{[key: string]: number[]}):Observable<Marker[]>{
     let params = new HttpParams();
+    let filtersTags = ["event","status","category","sanitary","breed"];
 
     if(ids.length){
       params = params.append('ids', ids.join(', '));
     }
+    filtersTags.forEach((filter)=>{
+      if(filters.hasOwnProperty(filter)){
+        if(filters[filter].length){
+          params = params.append(filter, filters[filter].join(', '));
+        }
+      }
+    });
+
     return this.http.get<Marker[]>(this.baseApi + "/markers-all-place",{params}).pipe(
       map((response:Marker[])=>{
           return response

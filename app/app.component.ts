@@ -21,11 +21,13 @@ export class AppComponent implements OnInit {
   makers:Marker[] = [];
   Layer = [];
   //@ts-ignore
-  SystemData:SystemData;
+  SystemData:SystemData = null;
   //Interactive array
   activeAreas:number[] = [];
   activePlaces:number[] = [];
   activeMarkers:number[] = [];
+
+  activeFilters:{[key: string]: number[]} = {"event":[],"status":[],"category":[],"sanitary":[],"breed":[]}
 
   treeIcon = icon({
     iconUrl:"https://png.pngtree.com/png-vector/20221205/ourmid/pngtree-simple-tree-png-image_6506935.png",
@@ -63,6 +65,7 @@ export class AppComponent implements OnInit {
     this.areaService.getAll().subscribe(
       data=>{
         this.areas = data;
+        this.recreateLayer();
       }
     );
   }
@@ -72,6 +75,7 @@ export class AppComponent implements OnInit {
       this.placeService.getAll(this.activeAreas).subscribe(
         data=>{
           this.places = data;
+          this.recreateLayer();
         }
       );
     }
@@ -83,9 +87,10 @@ export class AppComponent implements OnInit {
 
   initializeMarker(){
     if(this.activePlaces.length){
-      this.markerService.getAll(this.activePlaces).subscribe(
+      this.markerService.getAll(this.activePlaces,this.activeFilters).subscribe(
         data=>{
           this.makers = data;
+          this.recreateLayer();
         }
       );
     }
@@ -110,14 +115,12 @@ export class AppComponent implements OnInit {
     let index = this.activeAreas.indexOf(id)
     index == -1 ? this.activeAreas.push(id) : this.activeAreas.splice(index,1);
     this.initializePlace();
-    this.recreateLayer();
   }
 
   togglePlaces(id:number){
     let index = this.activePlaces.indexOf(id)
     index == -1 ? this.activePlaces.push(id) : this.activePlaces.splice(index,1);
     this.initializeMarker();
-    this.recreateLayer();
   }
 
   toggleMarkers(id:number){
@@ -125,6 +128,15 @@ export class AppComponent implements OnInit {
     index == -1 ? this.activeMarkers.push(id) : this.activeMarkers.splice(index,1);
     this.recreateLayer();
   }
+  toggleFilters(id:number,key:string){
+    if(this.activeFilters.hasOwnProperty(key)){
+      let index = this.activeFilters[key].indexOf(id)
+      index == -1 ? this.activeFilters[key].push(id) : this.activeFilters[key].splice(index,1);
+      this.initializeMarker();
+    }
+  }
+
+
   recreateLayer(){
     this.Layer = [];
     this.areas.forEach(
@@ -134,6 +146,7 @@ export class AppComponent implements OnInit {
         }
       }
     )
+    this.activePlaces = this.activePlaces.filter(activeItemId =>this.places.some(place => place.id === activeItemId));
     this.places.forEach(
       item=>{
         if(this.activePlaces.indexOf(item.id) != -1){
@@ -141,12 +154,14 @@ export class AppComponent implements OnInit {
         }
       }
     )
+    this.activeMarkers = this.activeMarkers.filter(activeItemId =>this.makers.some(marker => marker.id === activeItemId));
+
     this.makers.forEach(
       itemMarker=>{
-        if(this.activeMarkers.indexOf(itemMarker.id)){
+        if(this.activeMarkers.indexOf(itemMarker.id) != -1){
           let geocode = (JSON.parse(itemMarker.geocode));
           // @ts-ignore
-          this.Layer.push(marker([geocode.lat, geocode.lng ],{icon: this.treeIcon}).on("click",function () {
+          this.Layer.push(marker([geocode.lat, geocode.lng ]).on("click",function () {
             console.log(itemMarker);
           }));
         }
