@@ -2,6 +2,8 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import "~ngx-smart-modal/ngx-smart-modal.css";
+
 #map {
   width: 100%;
   min-height: 100vh;

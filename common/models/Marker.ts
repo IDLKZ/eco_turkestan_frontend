@@ -4,6 +4,7 @@ import {Status} from "./Status";
 import {Sanitary} from "./Sanitary";
 import {Category} from "./Category";
 import {Place} from "./Place";
+import {Event} from "./Event";
 
 export interface Marker {
   id: number

@@ -13,7 +13,7 @@
       <div id="accordion-collapse" data-accordion="collapse">
         <div class="my-4" *ngIf="areas != null">
           <h2 id="area-heading-1" >
-            <button type="button" class="flex items-center justify-between w-full p-5 font-medium text-left text-gray-500 border border-b-0 border-gray-200 rounded-t-xl focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-800 dark:border-gray-700 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800" data-accordion-target="#area-body-1" aria-expanded="true" aria-controls="area-body-1">
+            <button type="button" class="bg-emerald-600 flex items-center justify-between w-full p-5 font-medium text-left text-white border border-b-0 border-green-200 rounded-t-xl focus:ring-4 focus:ring-green-200 dark:focus:ring-green-800 dark:border-green-700 dark:text-white hover:bg-emerald-600dark:hover:bg-emerald-600" data-accordion-target="#area-body-1" aria-expanded="true" aria-controls="area-body-1">
               <span>Районы</span>
               <svg data-accordion-icon class="w-6 h-6 rotate-180 shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
             </button>
@@ -32,7 +32,7 @@
         </div>
         <div class="my-4" *ngIf="places != null">
           <h2 id="place-heading-1" >
-            <button type="button" class="flex items-center justify-between w-full p-5 font-medium text-left text-gray-500 border border-b-0 border-gray-200 rounded-t-xl focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-800 dark:border-gray-700 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800" data-accordion-target="#place-body-1" aria-expanded="true" aria-controls="place-body-1">
+            <button type="button" class="bg-emerald-600 flex items-center justify-between w-full p-5 font-medium text-left text-white border border-b-0 border-green-200 rounded-t-xl focus:ring-4 focus:ring-green-200 dark:focus:ring-green-800 dark:border-green-700 dark:text-white hover:bg-emerald-600dark:hover:bg-emerald-600" data-accordion-target="#place-body-1" aria-expanded="true" aria-controls="place-body-1">
               <span>Места ({{places.length}})</span>
               <svg data-accordion-icon class="w-6 h-6 rotate-180 shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
             </button>
@@ -50,86 +50,46 @@
           </div>
         </div>
 
-        <div class="my-4" *ngIf="makers != null">
-          <h2 id="makers-heading-1" >
-            <button type="button" class="flex items-center justify-between w-full p-5 font-medium text-left text-gray-500 border border-b-0 border-gray-200 rounded-t-xl focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-800 dark:border-gray-700 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800" data-accordion-target="#makers-body-1" aria-expanded="true" aria-controls="makers-body-1">
-              <span>Точки посадки ({{makers.length}})</span>
-              <svg data-accordion-icon class="w-6 h-6 rotate-180 shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-            </button>
-          </h2>
-          <div id="makers-body-1" class="hidden" aria-labelledby="place-heading-1">
-            <fieldset class="px-4 my-2" *ngIf="makers.length">
-              <legend class="my-4 font-bold">Точки посадки:</legend>
-
-              <div class="flex items-center mb-4" *ngFor="let maker of makers">
-                <input (change)="toggleMarkers(maker.id)" [checked]="activeMarkers.indexOf(maker.id) != -1" id="marker-{{maker.id}}" type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" >
-                <label for="marker-{{maker.id}}" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
-                  Маркер {{maker.id}}<br>
-                </label>
-              </div>
-            </fieldset>
-          </div>
-        </div>
         <div class="my-4">
           <h2 id="filter-heading-1" >
-            <button type="button" class="flex items-center justify-between w-full p-5 font-medium text-left text-gray-500 border border-b-0 border-gray-200 rounded-t-xl focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-800 dark:border-gray-700 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800" data-accordion-target="#filter-body-1" aria-expanded="true" aria-controls="filter-body-1">
+            <button type="button" class="bg-emerald-600 flex items-center justify-between w-full p-5 font-medium text-left text-white border border-b-0 border-green-200 rounded-t-xl focus:ring-4 focus:ring-green-200 dark:focus:ring-green-800 dark:border-green-700 dark:text-white hover:bg-emerald-600dark:hover:bg-emerald-600" data-accordion-target="#filter-body-1" aria-expanded="true" aria-controls="filter-body-1">
               <span>Фильтры</span>
               <svg data-accordion-icon class="w-6 h-6 rotate-180 shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
             </button>
           </h2>
-          <div id="filter-body-1" class="hidden" aria-labelledby="filter-heading-1">
+          <div id="filter-body-1" class="hidden min-h-screen" aria-labelledby="filter-heading-1">
+            <section *ngIf="SystemData != null">
+              <fieldset class="px-4 my-2" *ngIf="SystemData.category">
+                <legend class="my-4 font-bold">Категория посадки:</legend>
+                <ng-selectize [(ngModel)]="category_filter" class="my-4 w-4/12" [config]="MULTI_SELECT_CONFIG" [options]="SystemData.category" [placeholder]="'Категории'"></ng-selectize>
 
-            <fieldset class="px-4 my-2" *ngIf="SystemData.category.length">
-              <legend class="my-4 font-bold">Категория посадки:</legend>
+              </fieldset>
 
-              <div class="flex items-center mb-4" *ngFor="let category of SystemData.category">
-                <input (change)="toggleFilters(category.id,'category')" id="category-{{category.id}}" type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" >
-                <label for="category-{{category.id}}" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
-                  {{category.title_ru}}
-                </label>
-              </div>
-            </fieldset>
+              <fieldset class="px-4 my-2" *ngIf="SystemData.sanitary">
+                <legend class="my-4 font-bold">Санитарная категория посадки:</legend>
+                <ng-selectize [(ngModel)]="sanitary_filter"  class="my-4 w-4/12" [config]="MULTI_SELECT_CONFIG" [options]="SystemData.sanitary" [placeholder]="'Типы состояний'"></ng-selectize>
 
-            <fieldset class="px-4 my-2" *ngIf="SystemData.sanitary.length">
-              <legend class="my-4 font-bold">Санитарная категория посадки:</legend>
-              <div class="flex items-center mb-4" *ngFor="let sanitary of SystemData.sanitary">
-                <input (change)="toggleFilters(sanitary.id,'sanitary')"  id="sanitary-{{sanitary.id}}" type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" >
-                <label for="sanitary-{{sanitary.id}}" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
-                  {{sanitary.title_ru}}
-                </label>
-              </div>
-            </fieldset>
+              </fieldset>
 
-            <fieldset class="px-4 my-2" *ngIf="SystemData.status.length">
-              <legend class="my-4 font-bold">Статус посадки:</legend>
-              <div class="flex items-center mb-4" *ngFor="let status of SystemData.status">
-                <input (change)="toggleFilters(status.id,'status')" id="status-{{status.id}}" type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" >
-                <label for="status-{{status.id}}" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
-                  {{status.title_ru}}
-                </label>
-              </div>
-            </fieldset>
+              <fieldset class="px-4 my-2" *ngIf="SystemData.status">
+                <legend class="my-4 font-bold">Статус посадки:</legend>
+                <ng-selectize [(ngModel)]="status_filter"  class="my-4 w-4/12" [config]="MULTI_SELECT_CONFIG" [options]="SystemData.status" [placeholder]="'Типы статусов'"></ng-selectize>
 
-            <fieldset class="px-4 my-2" *ngIf="SystemData.event.length">
-              <legend class="my-4 font-bold">Мероприятие:</legend>
-              <div class="flex items-center mb-4" *ngFor="let event of SystemData.event">
-                <input (change)="toggleFilters(event.id,'event')" id="event-{{event.id}}" type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" >
-                <label for="event-{{event.id}}" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
-                  {{event.title_ru}}
-                </label>
-              </div>
-            </fieldset>
+              </fieldset>
 
-            <fieldset class="px-4 my-2" *ngIf="SystemData.breed.length">
-              <legend class="my-4 font-bold">Тип посадки:</legend>
-              <div class="flex items-center mb-4" *ngFor="let breed of SystemData.breed">
-                <input (change)="toggleFilters(breed.id,'breed')" id="breed-{{breed.id}}" type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" >
-                <label for="breed-{{breed.id}}" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
-                  {{breed.title_ru}}
-                </label>
-              </div>
-            </fieldset>
+              <fieldset class="px-4 my-2" *ngIf="SystemData.event">
+                <legend class="my-4 font-bold">Мероприятие:</legend>
+                <ng-selectize [(ngModel)]="event_filter"  class="my-4 w-4/12" [config]="MULTI_SELECT_CONFIG" [options]="SystemData.event" [placeholder]="'Типы Мероприятий'"></ng-selectize>
 
+              </fieldset>
+
+              <fieldset class="px-4 my-2" *ngIf="SystemData.breed">
+                <legend class="my-4 font-bold">Тип посадки:</legend>
+                <ng-selectize [(ngModel)]="breed_filter"  class="my-4 w-4/12" [config]="MULTI_SELECT_CONFIG" [options]="SystemData.breed" [placeholder]="'Типы деревьев'"></ng-selectize>
+              </fieldset>
+              <button (click)="toggleFilters()" type="button" class="text-white bg-green-700 hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Использовать фильтры</button>
+
+            </section>
           </div>
         </div>
 
@@ -139,20 +99,48 @@
 </div>
 
 
-    <!-- drawer init and show -->
-    <div class="text-center">
-      <button class="absolute right-1 z-20 top-2 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800" type="button" data-drawer-target="drawer-navigation" data-drawer-show="drawer-navigation" aria-controls="drawer-navigation">
-        Фильтры
-      </button>
+      <div class="text-center">
+        <button class="absolute right-1 z-20 top-2 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800" type="button" data-drawer-target="drawer-navigation" data-drawer-show="drawer-navigation" aria-controls="drawer-navigation">
+          Фильтры
+        </button>
+        <div
+          id="map"
+          class="z-10"
+          leaflet
+          [leafletOptions]="options"
+          [leafletLayers]="Layer"
+          (leafletMapZoomEnd) = "onZoom($event)"
+          (leafletMapMoveEnd) = "onZoom($event)"
+        >
+        </div>
 
-      <div
-        id="map"
-        class="z-10"
-        leaflet
-        [leafletOptions]="options"
-        [leafletLayers]="Layer"
-      >
+
+      </div>
+
+    <!-- drawer init and show -->
+<button (click)="ngxSmartModalService.getModal('myModal').open()">Open myModal</button>
+<ngx-smart-modal #myModal identifier="myModal">
+
+  <div class="w-full bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+    <a href="#">
+      <img class="rounded-t-lg" src="https://obuchonok.ru/files/images/derevo.jpg" alt="" />
+    </a>
+    <div class="p-5" *ngIf="activeMarker">
+      <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+        <p>Позиция: <b>{{activeMarker.geocode}}</b></p>
+        <p>Номер: <b>{{activeMarker.id}}</b></p>
+        <p>Событие: <b>{{activeMarker.event.title_ru}}</b></p>
+        <p>Состояние: <b>{{activeMarker.sanitary.title_ru}}</b></p>
+        <p>Статус: <b>{{activeMarker.status.title_ru}}</b></p>
+        <p>Тип: <b>{{activeMarker.type.title_ru}}</b></p>
+        <p>Категория:<b>{{activeMarker.category.title_ru}}</b></p>
+        <p>Дата: <b>{{activeMarker.landing_date}}</b></p>
+        <p>Автор:<b>{{activeMarker.user_id}}</b></p>
       </div>
     </div>
+  </div>
+</ngx-smart-modal>
 
     <!-- drawer component -->
+
+

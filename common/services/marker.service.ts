@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {environment} from "../../environments/environment";
 import {HttpClient, HttpParams} from "@angular/common/http";
-import {catchError, distinct, map, Observable, shareReplay} from "rxjs";
+import {catchError, delay, distinct, map, Observable, shareReplay} from "rxjs";
 import {Area} from "../models/Area";
 import {Marker} from "../models/Marker";
 
@@ -16,12 +16,15 @@ export class MarkerService {
 
   }
 
-  getAll(ids:number[],filters:{[key: string]: number[]}):Observable<Marker[]>{
+  getAll(ids:number[],search_polygon:string,filters:{[key: string]: number[]}):Observable<Marker[]>{
     let params = new HttpParams();
     let filtersTags = ["event","status","category","sanitary","breed"];
 
     if(ids.length){
       params = params.append('ids', ids.join(', '));
+    }
+    if(search_polygon){
+      params = params.append('search_polygon', search_polygon);
     }
     filtersTags.forEach((filter)=>{
       if(filters.hasOwnProperty(filter)){
@@ -40,7 +43,7 @@ export class MarkerService {
         }),
       ),
       distinct(),
-      shareReplay()
+      shareReplay(),
 
     )
   }
