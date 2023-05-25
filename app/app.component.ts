@@ -17,7 +17,7 @@ import {delay} from "rxjs";
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  maxZoom:number = 17;
+  maxZoom:number = 15;
   title = 'eco_shymkent_front';
   areas:Area[] = [];
   places:Place[] = [];
@@ -79,7 +79,8 @@ export class AppComponent implements OnInit {
   }
   onZoom($event:any){
     let actualZoom = $event.target.getZoom();
-    if(actualZoom == this.maxZoom){
+    this.Layer = Array.from(this.actualLayer);
+    if(actualZoom >= this.maxZoom){
       let bounds = $event.target.getBounds();
       let search_polygon = polygon([
         bounds._southWest,
@@ -142,8 +143,9 @@ export class AppComponent implements OnInit {
         }
       );
     }
-
   }
+
+
 
 
   AddLayer(geocode:string,bg_color:string,title_ru:string){
