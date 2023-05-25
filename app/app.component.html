@@ -129,11 +129,11 @@
       <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
         <p>Позиция: <b>{{activeMarker.geocode}}</b></p>
         <p>Номер: <b>{{activeMarker.id}}</b></p>
-        <p>Событие: <b>{{activeMarker.event.title_ru}}</b></p>
-        <p>Состояние: <b>{{activeMarker.sanitary.title_ru}}</b></p>
-        <p>Статус: <b>{{activeMarker.status.title_ru}}</b></p>
-        <p>Тип: <b>{{activeMarker.type.title_ru}}</b></p>
-        <p>Категория:<b>{{activeMarker.category.title_ru}}</b></p>
+        <p>Событие: <b>{{getTitle("event",activeMarker.event_id)}}</b></p>
+        <p>Состояние: <b>{{getTitle("sanitary",activeMarker.sanitary_id)}}</b></p>
+        <p>Статус: <b>{{getTitle("status",activeMarker.status_id)}}</b></p>
+        <p>Тип: <b>{{getTitle("type",activeMarker.type_id)}}</b></p>
+        <p>Категория:<b>{{getTitle("category",activeMarker.category_id)}}</b></p>
         <p>Дата: <b>{{activeMarker.landing_date}}</b></p>
         <p>Автор:<b>{{activeMarker.user_id}}</b></p>
       </div>

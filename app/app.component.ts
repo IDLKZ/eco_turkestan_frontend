@@ -221,6 +221,17 @@ export class AppComponent implements OnInit {
     this.initializeMarker();
   }
 
+  getTitle(property:string,id:number){
+    try{
+      // @ts-ignore
+      let element = this.SystemData[property].find(item=>item.id == id);
+      return element.title_ru;
+    }
+    catch (e) {
+      return "Неизвестно";
+    }
+
+  }
 
 
 
