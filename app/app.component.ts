@@ -1,5 +1,5 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {latLng, tileLayer, geoJSON, polygon, marker, Layer, icon, Icon, LeafletMouseEvent} from "leaflet";
+import {latLng, tileLayer, geoJSON, polygon, marker, Layer, icon, Icon, LeafletMouseEvent, IconOptions} from "leaflet";
 import {AreaService} from "../common/services/area.service";
 import {Area} from "../common/models/Area";
 import {PlaceService} from "../common/services/place.service";
@@ -11,6 +11,7 @@ import {SystemData} from "../common/models/SystemData";
 import { Modal } from 'flowbite';
 import {NgxSmartModalService} from "ngx-smart-modal";
 import {delay} from "rxjs";
+import {environment} from "../environments/environment";
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -49,6 +50,7 @@ export class AppComponent implements OnInit {
     iconAnchor: [25, 25],
   });
   selectedMarker:any = null;
+  baseApiImage = environment.baseUrlImage;
   options = {
     preferCanvas:true,
     layers: [
@@ -137,7 +139,7 @@ export class AppComponent implements OnInit {
             itemMarker=>{
               let geocode = (JSON.parse(itemMarker.geocode));
               // @ts-ignore
-              this.Layer.push(marker([geocode.lat, geocode.lng ],{icon:this.treeIcon}).on("click",(e)=>this.clickFeauturePoint(e,itemMarker)));
+              this.Layer.push(marker([geocode.lat, geocode.lng ],{icon:this.getTreeIcon(itemMarker.sanitary_id)}).on("click",(e)=>this.clickFeauturePoint(e,itemMarker)));
             }
           )
         }
@@ -199,9 +201,8 @@ export class AppComponent implements OnInit {
   clickFeauturePoint(e:LeafletMouseEvent,item:Marker){
     if (this.selectedMarker) {
       // Revert the icon of the previously clicked marker
-      this.selectedMarker.setIcon(this.treeIcon);
+      this.selectedMarker.setIcon(this.getTreeIcon(item.sanitary_id));
     }
-
     // Change the icon of the clicked marker
     e.target.setIcon(this.selectedTreeIcon);
     // Store the reference to the currently clicked marker
@@ -230,6 +231,30 @@ export class AppComponent implements OnInit {
     catch (e) {
       return "Неизвестно";
     }
+  }
+
+  getTreeIcon(id:number):Icon<IconOptions>{
+    if(this.SystemData.sanitary){
+      var img = "https://dpbh.ucla.edu/wp-content/uploads/2021/10/tree_icon.png";
+      if(this.SystemData.sanitary.length){
+        var icons = this.SystemData.sanitary.find(item => item.id == id);
+        if(icons != null){
+          img = this.baseApiImage + icons.image_url;
+        }
+      }
+
+
+      return icon({
+        iconUrl:img,
+        iconSize: [25, 25],
+        iconAnchor: [25, 25],
+      });
+    }
+      return icon({
+        iconUrl:"https://dpbh.ucla.edu/wp-content/uploads/2021/10/tree_icon.png",
+        iconSize: [25, 25],
+        iconAnchor: [25, 25],
+      });
 
   }
 

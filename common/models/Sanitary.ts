@@ -4,4 +4,6 @@ export interface Sanitary {
   title_kz: string
   created_at: string
   updated_at: string
+
+  image_url : string|null
 }
