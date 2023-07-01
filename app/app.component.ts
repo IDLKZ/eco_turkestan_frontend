@@ -8,9 +8,7 @@ import {MarkerService} from "../common/services/marker.service";
 import {Marker} from "../common/models/Marker";
 import {SystemDataService} from "../common/services/system-data.service";
 import {SystemData} from "../common/models/SystemData";
-import { Modal } from 'flowbite';
 import {NgxSmartModalService} from "ngx-smart-modal";
-import {delay} from "rxjs";
 import {environment} from "../environments/environment";
 @Component({
   selector: 'app-root',
@@ -71,7 +69,7 @@ export class AppComponent implements OnInit {
     searchField: ['title_ru'],
     maxItems: 50
   });
-
+  baseBreedsImage = environment.baseBreedsImage;
   ngOnInit(): void {
 
   }
@@ -150,6 +148,7 @@ export class AppComponent implements OnInit {
 
 
 
+
   AddLayer(geocode:string,bg_color:string,title_ru:string){
     let data = geoJSON(
       JSON.parse(geocode)
@@ -174,8 +173,30 @@ export class AppComponent implements OnInit {
     this.recreateLayer();
   }
 
+  getBreedImage(id:number){
+    try{
+      // @ts-ignore
+      let element = this.SystemData["breed"].find(item=>item.id == id);
+      if(element){
+        return this.baseBreedsImage + element.image_url;
+      }
+      return "https://obuchonok.ru/files/images/derevo.jpg";
+    }
+    catch (e) {
+      return "https://obuchonok.ru/files/images/derevo.jpg";
+    }
+  }
 
+  getLatLng(geocode:string):string{
+    try{
+      let latlng = JSON.parse(geocode);
+      return `Широта ${latlng.lat}, Долгота ${latlng.lng}.`
+    }
+    catch (e) {
+      return "-"
+    }
 
+  }
 
   recreateLayer(){
     this.Layer = [];

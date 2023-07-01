@@ -9,7 +9,7 @@
       <div id="accordion-collapse" data-accordion="collapse">
         <div class="my-4" *ngIf="areas != null">
           <h2 id="area-heading-1" >
-            <button type="button" class="bg-emerald-600 flex items-center justify-between w-full p-5 font-medium text-left text-white border border-b-0 border-green-200 rounded-t-xl focus:ring-4 focus:ring-green-200 dark:focus:ring-green-800 dark:border-green-700 dark:text-white hover:bg-emerald-600dark:hover:bg-emerald-600" data-accordion-target="#area-body-1" aria-expanded="true" aria-controls="area-body-1">
+            <button type="button" class="bg-emerald-600 flex items-center justify-between w-full p-5 font-medium text-left text-white border border-b-0 border-green-200 rounded-t-xl focus:ring-4 focus:ring-green-200 dark:focus:ring-green-800 dark:border-green-700 dark:text-white hover:bg-emerald-600 dark:hover:bg-emerald-600 bg-green-800" data-accordion-target="#area-body-1" aria-expanded="true" aria-controls="area-body-1">
               <span>Районы</span>
               <svg data-accordion-icon class="w-6 h-6 rotate-180 shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
             </button>
@@ -19,7 +19,7 @@
               <legend class="my-4 font-bold">Районы:</legend>
 
               <div class="flex items-center mb-4" *ngFor="let area of areas">
-                <input (change)="toggleArea(area.id)" [checked]="activeAreas.indexOf(area.id) != -1" id="area-{{area.id}}" type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" >
+                <input (change)="toggleArea(area.id)" [checked]="activeAreas.indexOf(area.id) != -1" id="area-{{area.id}}" type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-green-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" >
                 <label for="area-{{area.id}}" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">{{area.title_ru}}</label>
               </div>
 
@@ -28,7 +28,7 @@
         </div>
         <div class="my-4" *ngIf="places != null">
           <h2 id="place-heading-1" >
-            <button type="button" class="bg-emerald-600 flex items-center justify-between w-full p-5 font-medium text-left text-white border border-b-0 border-green-200 rounded-t-xl focus:ring-4 focus:ring-green-200 dark:focus:ring-green-800 dark:border-green-700 dark:text-white hover:bg-emerald-600dark:hover:bg-emerald-600" data-accordion-target="#place-body-1" aria-expanded="true" aria-controls="place-body-1">
+            <button type="button" class="bg-emerald-600 flex items-center justify-between w-full p-5 font-medium text-left text-white border border-b-0 border-green-200 rounded-t-xl focus:ring-4 focus:ring-green-200 dark:focus:ring-green-800 dark:border-green-700 dark:text-white hover:bg-emerald-600dark:hover:bg-emerald-600 bg-green-800" data-accordion-target="#place-body-1" aria-expanded="true" aria-controls="place-body-1">
               <span>Места ({{places.length}})</span>
               <svg data-accordion-icon class="w-6 h-6 rotate-180 shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
             </button>
@@ -48,7 +48,7 @@
 
         <div class="my-4">
           <h2 id="filter-heading-1" >
-            <a class="bg-emerald-600 flex items-center justify-between w-full p-5 font-medium text-left text-white border border-b-0 border-green-200 rounded-t-xl focus:ring-4 focus:ring-green-200 dark:focus:ring-green-800 dark:border-green-700 dark:text-white hover:bg-emerald-600dark:hover:bg-emerald-600" data-accordion-target="#filter-body-1" aria-expanded="true" aria-controls="filter-body-1">
+            <a class="bg-emerald-600 flex items-center justify-between w-full p-5 font-medium text-left text-white border border-b-0 border-green-200 rounded-t-xl focus:ring-4 focus:ring-green-200 dark:focus:ring-green-800 dark:border-green-700 dark:text-white hover:bg-emerald-600dark:hover:bg-emerald-600 bg-green-800" data-accordion-target="#filter-body-1" aria-expanded="true" aria-controls="filter-body-1">
               <span>Фильтры</span>
               <svg data-accordion-icon class="w-6 h-6 rotate-180 shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
             </a>
@@ -117,23 +117,33 @@
 <ngx-smart-modal #myModal identifier="myModal">
 
   <div class="w-full bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+    <section *ngIf="activeMarker">
     <a href="#">
-      <img class="rounded-t-lg" src="https://obuchonok.ru/files/images/derevo.jpg" alt="" />
+      <div
+        [ngStyle]="{backgroundImage: 'url(' + getBreedImage(activeMarker.breed_id) + ')', height: '350px',backgroundPosition:'center',backgroundSize:'cover',backgroundRepeat:'no-repeat'}"
+      >
+
+      </div>
+      <img  class="rounded-t-lg" [src]='' alt="" />
     </a>
-    <div class="p-5" *ngIf="activeMarker">
+    <div class="p-5">
       <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-        <p>Позиция: <b>{{activeMarker.geocode}}</b></p>
+        <p>Геопозиция: <b>{{getLatLng(activeMarker.geocode)}}</b></p>
         <p>Номер: <b>{{activeMarker.id}}</b></p>
-        <p>Событие: <b>{{getTitle("event",activeMarker.event_id)}}</b></p>
-        <p>Состояние: <b>{{getTitle("sanitary",activeMarker.sanitary_id)}}</b></p>
-        <p>Статус: <b>{{getTitle("status",activeMarker.status_id)}}</b></p>
-        <p>Тип: <b>{{getTitle("type",activeMarker.type_id)}}</b></p>
-        <p>Категория:<b>{{getTitle("category",activeMarker.category_id)}}</b></p>
-        <p>Дата: <b>{{activeMarker.landing_date}}</b></p>
-        <p>Автор:<b>{{activeMarker.user_id}}</b></p>
+        <p *ngIf="activeMarker.breed_id">Вид насаждения: <b>{{getTitle("breed",activeMarker.breed_id)}}</b></p>
+        <p *ngIf="activeMarker.event_id">Событие: <b>{{getTitle("event",activeMarker.event_id)}}</b></p>
+        <p *ngIf="activeMarker.sanitary_id">Состояние: <b>{{getTitle("sanitary",activeMarker.sanitary_id)}}</b></p>
+        <p *ngIf="activeMarker.status_id">Статус: <b>{{getTitle("status",activeMarker.status_id)}}</b></p>
+        <p *ngIf="activeMarker.type_id">Тип: <b>{{getTitle("type",activeMarker.type_id)}}</b></p>
+        <p *ngIf="activeMarker.category_id">Категория:<b>{{getTitle("category",activeMarker.category_id)}}</b></p>
+        <p>Возраст: <b>{{activeMarker.age}} лет</b></p>
+        <p>Диаметр: <b>{{activeMarker.diameter}} см.</b></p>
+        <p>Высота: <b>{{activeMarker.height}} м.</b></p>
       </div>
     </div>
+    </section>
   </div>
+
 </ngx-smart-modal>
 
     <!-- drawer component -->
