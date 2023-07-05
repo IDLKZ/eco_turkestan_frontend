@@ -4,6 +4,7 @@ import {Sanitary} from "./Sanitary";
 import {Status} from "./Status";
 import {Type} from "./Type";
 import {Event} from "./Event";
+import {SanitaryType} from "./SanitaryType";
 
 export interface SystemData {
   breed: Breed[]
@@ -12,4 +13,5 @@ export interface SystemData {
   sanitary: Sanitary[]
   status: Status[]
   type: Type[]
+  sanitary_type:SanitaryType[]
 }

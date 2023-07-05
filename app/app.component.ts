@@ -16,7 +16,7 @@ import {environment} from "../environments/environment";
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  maxZoom:number = 15;
+  maxZoom:number = 21;
   title = 'eco_shymkent_front';
   areas:Area[] = [];
   places:Place[] = [];
@@ -52,7 +52,7 @@ export class AppComponent implements OnInit {
   options = {
     preferCanvas:true,
     layers: [
-      tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18, attribution: '...' })
+      tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}',  {subdomains:['mt0','mt1','mt2','mt3'], maxZoom: 21, maxNativeZoom: 20, attribution: '...' })
     ],
     zoom: 12,
     center: latLng(42.315524, 69.586943),
@@ -222,7 +222,7 @@ export class AppComponent implements OnInit {
   clickFeauturePoint(e:LeafletMouseEvent,item:Marker){
     if (this.selectedMarker) {
       // Revert the icon of the previously clicked marker
-      this.selectedMarker.setIcon(this.getTreeIcon(item.sanitary_id));
+      this.selectedMarker.setIcon(this.getTreeIcon(item.sanitary_id,item.type_id));
     }
     // Change the icon of the clicked marker
     e.target.setIcon(this.selectedTreeIcon);
@@ -254,11 +254,11 @@ export class AppComponent implements OnInit {
     }
   }
 
-  getTreeIcon(id:number):Icon<IconOptions>{
+  getTreeIcon(sanitary_id:number|null,type_id:number|null):Icon<IconOptions>{
     if(this.SystemData.sanitary){
       var img = "https://dpbh.ucla.edu/wp-content/uploads/2021/10/tree_icon.png";
-      if(this.SystemData.sanitary.length){
-        var icons = this.SystemData.sanitary.find(item => item.id == id);
+      if(this.SystemData.sanitary_type.length){
+        var icons = this.SystemData.sanitary_type.find(item => item.sanitary_id == sanitary_id && item.type_id == type_id);
         if(icons != null){
           img = this.baseApiImage + icons.image_url;
         }
