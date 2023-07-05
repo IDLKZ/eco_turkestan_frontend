@@ -16,7 +16,7 @@ import {environment} from "../environments/environment";
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  maxZoom:number = 15;
+  maxZoom:number = 18;
   title = 'eco_shymkent_front';
   areas:Area[] = [];
   places:Place[] = [];
@@ -27,13 +27,14 @@ export class AppComponent implements OnInit {
   //Interactive array
   activeAreas:number[] = [];
   activePlaces:number[] = [];
-  activeFilters:{[key: string]: number[]} = {"event":[],"status":[],"category":[],"sanitary":[],"breed":[]}
+  activeFilters:{[key: string]: number[]} = {"event":[],"status":[],"category":[],"sanitary":[],"breed":[],"type":[]}
   actualLayer = [];
   event_filter:number[] = [];
   status_filter:number[] = [];
   category_filter:number[] = [];
   sanitary_filter:number[] = [];
   breed_filter:number[] = [];
+  type_filter:number[] = [];
   search_polygon:string = "";
   treeIcon = icon({
     iconUrl:"https://dpbh.ucla.edu/wp-content/uploads/2021/10/tree_icon.png",
@@ -52,7 +53,7 @@ export class AppComponent implements OnInit {
   options = {
     preferCanvas:true,
     layers: [
-      tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18, attribution: '...' })
+      tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}',  {subdomains:['mt0','mt1','mt2','mt3'], maxZoom: 21, maxNativeZoom: 20, attribution: '...' })
     ],
     zoom: 12,
     center: latLng(42.315524, 69.586943),
@@ -74,8 +75,8 @@ export class AppComponent implements OnInit {
 
   }
   constructor(public ngxSmartModalService: NgxSmartModalService,private areaService:AreaService,private placeService:PlaceService,private markerService:MarkerService,private systemService:SystemDataService) {
-      this.initializeSystemData();
-      this.initializeArea();
+    this.initializeSystemData();
+    this.initializeArea();
   }
   onZoom($event:any){
     let actualZoom = $event.target.getZoom();
@@ -119,13 +120,13 @@ export class AppComponent implements OnInit {
   }
 
   initializePlace(){
-      this.placeService.getAll(this.activeAreas).subscribe(
-        data=>{
-          this.places = data;
-          this.activePlaces = this.activePlaces.filter(activeItemId =>this.places.some(place => place.id === activeItemId));
-          this.recreateLayer();
-        }
-      );
+    this.placeService.getAll(this.activeAreas).subscribe(
+      data=>{
+        this.places = data;
+        this.activePlaces = this.activePlaces.filter(activeItemId =>this.places.some(place => place.id === activeItemId));
+        this.recreateLayer();
+      }
+    );
   }
 
   initializeMarker(){
@@ -137,7 +138,7 @@ export class AppComponent implements OnInit {
             itemMarker=>{
               let geocode = (JSON.parse(itemMarker.geocode));
               // @ts-ignore
-              this.Layer.push(marker([geocode.lat, geocode.lng ],{icon:this.getTreeIcon(itemMarker.sanitary_id)}).on("click",(e)=>this.clickFeauturePoint(e,itemMarker)));
+              this.Layer.push(marker([geocode.lat, geocode.lng ],{icon:this.getTreeIcon(itemMarker.sanitary_id,itemMarker.type_id)}).on("click",(e)=>this.clickFeauturePoint(e,itemMarker)));
             }
           )
         }
@@ -152,7 +153,7 @@ export class AppComponent implements OnInit {
   AddLayer(geocode:string,bg_color:string,title_ru:string){
     let data = geoJSON(
       JSON.parse(geocode)
-      );
+    );
     data.setStyle({
       color:bg_color
     });
@@ -222,7 +223,7 @@ export class AppComponent implements OnInit {
   clickFeauturePoint(e:LeafletMouseEvent,item:Marker){
     if (this.selectedMarker) {
       // Revert the icon of the previously clicked marker
-      this.selectedMarker.setIcon(this.getTreeIcon(item.sanitary_id));
+      this.selectedMarker.setIcon(this.getTreeIcon(item.sanitary_id,item.type_id));
     }
     // Change the icon of the clicked marker
     e.target.setIcon(this.selectedTreeIcon);
@@ -239,7 +240,7 @@ export class AppComponent implements OnInit {
 
   toggleFilters(){
     this.Layer = Array.from(this.actualLayer);
-    this.activeFilters = {"event":this.event_filter,"status":this.status_filter,"category":this.category_filter,"sanitary":this.sanitary_filter,"breed":this.breed_filter}
+    this.activeFilters = {"event":this.event_filter,"status":this.status_filter,"category":this.category_filter,"sanitary":this.sanitary_filter,"breed":this.breed_filter,"type":this.type_filter}
     this.initializeMarker();
   }
 
@@ -254,11 +255,11 @@ export class AppComponent implements OnInit {
     }
   }
 
-  getTreeIcon(id:number):Icon<IconOptions>{
+  getTreeIcon(sanitary_id:number|null,type_id:number|null):Icon<IconOptions>{
     if(this.SystemData.sanitary){
       var img = "https://dpbh.ucla.edu/wp-content/uploads/2021/10/tree_icon.png";
-      if(this.SystemData.sanitary.length){
-        var icons = this.SystemData.sanitary.find(item => item.id == id);
+      if(this.SystemData.sanitary_type.length){
+        var icons = this.SystemData.sanitary_type.find(item => item.sanitary_id == sanitary_id && item.type_id == type_id);
         if(icons != null){
           img = this.baseApiImage + icons.image_url;
         }
@@ -271,11 +272,11 @@ export class AppComponent implements OnInit {
         iconAnchor: [25, 25],
       });
     }
-      return icon({
-        iconUrl:"https://dpbh.ucla.edu/wp-content/uploads/2021/10/tree_icon.png",
-        iconSize: [25, 25],
-        iconAnchor: [25, 25],
-      });
+    return icon({
+      iconUrl:"https://dpbh.ucla.edu/wp-content/uploads/2021/10/tree_icon.png",
+      iconSize: [25, 25],
+      iconAnchor: [25, 25],
+    });
 
   }
 

@@ -18,7 +18,7 @@ export class MarkerService {
 
   getAll(ids:number[],search_polygon:string,filters:{[key: string]: number[]}):Observable<Marker[]>{
     let params = new HttpParams();
-    let filtersTags = ["event","status","category","sanitary","breed"];
+    let filtersTags = ["event","status","category","sanitary","breed","type"];
 
     if(ids.length){
       params = params.append('ids', ids.join(', '));

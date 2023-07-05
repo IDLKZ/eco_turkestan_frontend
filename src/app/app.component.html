@@ -58,31 +58,30 @@
               <fieldset class="px-4 my-2" *ngIf="SystemData.category">
                 <legend class="my-4 font-bold">Категория посадки:</legend>
                 <ng-selectize [(ngModel)]="category_filter" class="my-4 w-4/12" [config]="MULTI_SELECT_CONFIG" [options]="SystemData.category" [placeholder]="'Категории'"></ng-selectize>
-
               </fieldset>
-
               <fieldset class="px-4 my-2" *ngIf="SystemData.sanitary">
-                <legend class="my-4 font-bold">Санитарная категория посадки:</legend>
+                <legend class="my-4 font-bold">Состояние насаждений:</legend>
                 <ng-selectize [(ngModel)]="sanitary_filter"  class="my-4 w-4/12" [config]="MULTI_SELECT_CONFIG" [options]="SystemData.sanitary" [placeholder]="'Типы состояний'"></ng-selectize>
-
               </fieldset>
-
+              <fieldset class="px-4 my-2" *ngIf="SystemData.breed">
+                <legend class="my-4 font-bold">Вид насаждения:</legend>
+                <ng-selectize [(ngModel)]="breed_filter"  class="my-4 w-4/12" [config]="MULTI_SELECT_CONFIG" [options]="SystemData.breed" [placeholder]="'Типы деревьев'"></ng-selectize>
+              </fieldset>
+              <fieldset class="px-4 my-2" *ngIf="SystemData.type">
+                <legend class="my-4 font-bold">Тип насаждения:</legend>
+                <ng-selectize [(ngModel)]="type_filter"  class="my-4 w-4/12" [config]="MULTI_SELECT_CONFIG" [options]="SystemData.type" [placeholder]="'Тип насаждения'"></ng-selectize>
+              </fieldset>
               <fieldset class="px-4 my-2" *ngIf="SystemData.status">
                 <legend class="my-4 font-bold">Статус посадки:</legend>
                 <ng-selectize [(ngModel)]="status_filter"  class="my-4 w-4/12" [config]="MULTI_SELECT_CONFIG" [options]="SystemData.status" [placeholder]="'Типы статусов'"></ng-selectize>
-
               </fieldset>
-
               <fieldset class="px-4 my-2" *ngIf="SystemData.event">
                 <legend class="my-4 font-bold">Мероприятие:</legend>
                 <ng-selectize [(ngModel)]="event_filter"  class="my-4 w-4/12" [config]="MULTI_SELECT_CONFIG" [options]="SystemData.event" [placeholder]="'Типы Мероприятий'"></ng-selectize>
 
               </fieldset>
 
-              <fieldset class="px-4 my-2" *ngIf="SystemData.breed">
-                <legend class="my-4 font-bold">Тип посадки:</legend>
-                <ng-selectize [(ngModel)]="breed_filter"  class="my-4 w-4/12" [config]="MULTI_SELECT_CONFIG" [options]="SystemData.breed" [placeholder]="'Типы деревьев'"></ng-selectize>
-              </fieldset>
+
               <button (click)="toggleFilters()" type="button" class="text-white bg-green-700 hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Использовать фильтры</button>
 
             </section>
@@ -95,7 +94,7 @@
 </div>
 
 
-      <div class="text-center">
+      <div class="relative">
         <button class="absolute right-1 z-20 top-2 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800" type="button" data-drawer-target="drawer-navigation" data-drawer-show="drawer-navigation" aria-controls="drawer-navigation">
           Фильтры
         </button>
@@ -122,7 +121,6 @@
       <div
         [ngStyle]="{backgroundImage: 'url(' + getBreedImage(activeMarker.breed_id) + ')', height: '350px',backgroundPosition:'center',backgroundSize:'cover',backgroundRepeat:'no-repeat'}"
       >
-
       </div>
       <img  class="rounded-t-lg" [src]='' alt="" />
     </a>
@@ -136,7 +134,7 @@
         <p *ngIf="activeMarker.status_id">Статус: <b>{{getTitle("status",activeMarker.status_id)}}</b></p>
         <p *ngIf="activeMarker.type_id">Тип: <b>{{getTitle("type",activeMarker.type_id)}}</b></p>
         <p *ngIf="activeMarker.category_id">Категория:<b>{{getTitle("category",activeMarker.category_id)}}</b></p>
-        <p>Возраст: <b>{{activeMarker.age}} лет</b></p>
+        <p>Возраст: <b>{{activeMarker.age}} в годах</b></p>
         <p>Диаметр: <b>{{activeMarker.diameter}} см.</b></p>
         <p>Высота: <b>{{activeMarker.height}} м.</b></p>
       </div>
