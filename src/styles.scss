@@ -8,3 +8,6 @@
   width: 100%;
   min-height: 100vh;
 }
+.leaflet-container .leaflet-control-attribution {
+  display: none!important;
+}
