@@ -56,7 +56,7 @@ export class AppComponent implements OnInit {
       tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}',  {subdomains:['mt0','mt1','mt2','mt3'], maxZoom: 21, maxNativeZoom: 20, attribution: '...' })
     ],
     zoom: 12,
-    center: latLng(42.315524, 69.586943),
+    center: latLng(43.300777, 68.321683),
   };
   MULTI_SELECT_CONFIG: any = Object.assign({}, {
     highlight: false,
